@@ -1,69 +1,30 @@
 'use strict';
+
 //задание 1
-let a = [
- [{
-        name: 'Mary',
-        age: 23
-    }, {
-        name: 'Mike',
-        age: 45
-    }, {
-        name: 'Nick',
-        age: 11
-    }],
- [{
-        name: 'Adam',
-        age: 56
-    }, {
-        name: 'Sara',
-        age: 21
-    }, {
-        name: 'Don',
-        age: 22
-    }],
- [{
-        name: 'Karl',
-        age: 34
-    }, {
-        name: 'Marta',
-        age: 76
-    }, {
-        name: 'John',
-        age: 19
-    }]
-];
-
-let copy = JSON.parse(JSON.stringify(a));
-//copy[0][0].name = "Sergey"; проверка копирования по значению
-//console.log(a);
-console.log(copy);
-
+let Tf = null;
+let Tc = +prompt("Введите температуру в градусах Цельсия");
+if ((Tc !== Tc) || (Tc == "")) {
+    alert("Введено неверное значение");
+} else {
+    Tf = (9 / 5) * Tc + 32;
+    alert("Температура по Фаренгейту: " + Tf + " градусов");
+}
 //задание 2
-let basket = [];
-//заполняем случайными значениями
-for (let i = 1; i <= 10; i++) {
-    basket.push({
-        art: Math.round(Math.random() * 1e6),
-        name: 'product_' + i,
-        price: Math.round(Math.random() * 1e3 + 1e3)
-    });
-}
-//считаем общую стоимость
-function countBasketPrice() {
-    let total = 0;
-    basket.forEach(function (item) {
-        total += item.price;
-    });
-    return total;
-}
-console.log(`Стоимость товаров в корзине - ${countBasketPrice()} руб.`);
+let name = "Василий";
+let admin = name;
+console.log(admin);
 
 //задание 3
-for (let i = 0; i < 9; i++, console.log(i)) {};
+console.log(10 + 10 + "10", //выводит "2010", так как результат первой операции 20, после второй идет преобразование в строку
+    10 + "10" + 10, // выводит "101010" так как уже на первой операции происходит конкатенация
+    10 + 10 + +"10", // выводит 30, так как все операнды числовые, унарный + имеет более высокий приоритет перед сложением
+    10 / -"", // -"" дает -0, так что результат -Infinity
+    10 / +"2,5"); // результат NaN, поскольку "2,5" не может быть преобразовано в число
 
 //задание 4
-for (let i = 1; i <= 20; i++) {
-    let a = '';
-    for (let j = 1; j <= i; j++) a += '*';
-    console.log(a);
-}
+let mode = "normal"; // - правильно
+let my_valu3 = 102; // - правильно
+//let 3my_value3 = "102"; - неправильно, имя переменной не может начинаться с цифры
+let __hello__ = "world"; // - можно
+let $$$ = "money"; // - сойдет
+//let !0 _world = true; - не пойдет, начинается с "!"

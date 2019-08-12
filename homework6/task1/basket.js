@@ -1,11 +1,11 @@
-let goods = [];
 
-for (let i = 1; i <= 10; i++) {
+
+/*for (let i = 1; i <= 10; i++) {
     goods.push({
         name: 'product_' + i,
         price: Math.round(Math.random() * 1e3 + 1e3)
     });
-}
+}*/
 
 let basket = {
     goodsList: [],
@@ -33,22 +33,19 @@ let basket = {
         } else {
             this.goodsList[idx].count += quantity;
         }
+    },
+    render() {
+        this.content = this.countTotalNumber() === 0 ? "Корзина пуста" : `В корзине: ${this.countTotalNumber()} товаров </br> на сумму ${this.countTotalPrice()} руб.`;
+        let block = document.body.querySelector('.basket-content');
+        block.innerHTML = `<p>${this.content}</p>`;
+        
     }
 };
 
-let userChoice = confirm("Заполнить корзину товарами?");
+/*let userChoice = confirm("Заполнить корзину товарами?");
 if (userChoice) {
     for (let i = 0; i < goods.length; i++) basket.putProduct(goods[i], (i + 1) % 2 + 1);
-}
-basket.content = basket.countTotalNumber() === 0 ? "Корзина	пуста" : `В	корзине: ${basket.countTotalNumber()} товаров </br> на сумму ${basket.countTotalPrice()} руб.`;
+}*/
 
-let block = document.body.querySelector('.block');
-let header = document.createElement('div');
-header.className = 'header';
-header.textContent = 'Корзина';
-let content = document.createElement('div');
-content.className = 'content';
-content.innerHTML = `<p>${basket.content}</p>`
-block.appendChild(header);
-block.appendChild(content);
-block.style.display = "block";
+//basket.render();
+

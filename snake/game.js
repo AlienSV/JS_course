@@ -11,7 +11,8 @@ let game = {
     food,
     tickInterval: null,
     status,
-
+    score: document.getElementById('scoreCount'),
+    
     /**
      * Инициализация игры (установка начальных значений и настроек)
      * @param userSettings
@@ -37,6 +38,7 @@ let game = {
      * Сброс игры
      */
     reset() {
+        this.setScore(0);
         this.stop();
         this.snake.init(this.getStartSnakePoint(), 'up');
         this.food.setFoodCoordinates(this.getRandomCoordinates());
@@ -48,6 +50,10 @@ let game = {
      */
     render() {
         this.renderer.render(this.snake.body, this.food.getFoodCoordinates());
+    },
+
+    setScore(value) {
+        this.score.textContent = value;
     },
 
     /**
@@ -71,6 +77,8 @@ let game = {
         if(this.food.isFoodPoint(this.snake.getNextStepHeadPoint())) {
             this.snake.incrementBody();
             this.food.setFoodCoordinates(this.getRandomCoordinates());
+            this.setScore(this.snake.body.length - 1);
+            //this.settings.speed += 1;
             if(this.isGameWon()) {
                 this.finish();
             }
@@ -253,6 +261,6 @@ let game = {
  * Инициализация игры по событию onload
  */
 window.onload = function () {
-    game.init({speed: 3, winLength: 5});
+    game.init();
 };
 

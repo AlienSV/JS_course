@@ -4,7 +4,7 @@
  * Глобальный объект игры
  * @type {{play(): void, settings: ({colsCount, rowsCount, winLength, speed, validate}|{colsCount, rowsCount, winLength, speed}), init(*=): (undefined), keyDownHandler(*): (undefined), renderer: ({renderMap, cells, render}|{generateWall, getSquare, clearUserPosition, renderUserPosition, generateTable, render}|{clear, map, render}|{renderChessBoard, generateChessBoard}), tickInterval: null, changePlayButton(*, *=): void, snake: ({init, makeStep, isBodyPoint, incrementBody, maxY, maxX, lastStepDirection, getNextStepHeadPoint, body, setDirection, direction}|{init, makeStep, isBodyPoint, incrementBody, lastStepDirection, getNextStepHeadPoint, body, setDirection, direction}), getDirectionByCode(*): (string), canSnakeMakeStep(): *, food: {x, y, setFoodCoordinates, getFoodCoordinates, isFoodPoint}, setEventHandlers(): void, newGameClickHandler(): void, getStartSnakePoint(): *, canSetDirection(*): *, isGameWon(): *, tickHandler(): (undefined), stop(): void, reset(): void, finish(): void, getRandomCoordinates(): (*|undefined), render(): void, playClickHandler(): void, status: string}}
  */
-let game = {
+ let game = {
     settings,
     renderer,
     snake,
@@ -17,7 +17,7 @@ let game = {
      * Инициализация игры (установка начальных значений и настроек)
      * @param userSettings
      */
-    init(userSettings = {}) {
+     init(userSettings = {}) {
         Object.assign(this.settings, userSettings);
 
         if( !this.settings.validate()) {
@@ -37,7 +37,7 @@ let game = {
     /**
      * Сброс игры
      */
-    reset() {
+     reset() {
         this.setScore(0);
         this.stop();
         this.snake.init(this.getStartSnakePoint(), 'up');
@@ -48,18 +48,24 @@ let game = {
     /**
      * Отрисовка змейки и еды (функция создана, чтобы не переносить эту длинную строку каждый раз везде)
      */
-    render() {
+     render() {
         this.renderer.render(this.snake.body, this.food.getFoodCoordinates());
     },
 
     setScore(value) {
         this.score.textContent = value;
+        if (value !== 0) {
+            this.settings.speed += (MAX_SPEED_SIZE-MIN_SPEED_SIZE)/(this.settings.winLength-1);
+            clearInterval(this.tickInterval);
+            this.tickInterval = setInterval( () => game.tickHandler(), 1000 / this.settings.speed);
+            
+        }
     },
 
     /**
      * Запуск игры
      */
-    play() {
+     play() {
         this.status.setPlaying();
         this.tickInterval = setInterval( () => game.tickHandler(), 1000 / this.settings.speed);
         this.changePlayButton('Стоп');
@@ -68,7 +74,7 @@ let game = {
     /**
      * Функция, которая вызывается каждый тик таймера
      */
-    tickHandler() {
+     tickHandler() {
         if (!this.canSnakeMakeStep()) {
             this.finish();
             return;
@@ -78,7 +84,7 @@ let game = {
             this.snake.incrementBody();
             this.food.setFoodCoordinates(this.getRandomCoordinates());
             this.setScore(this.snake.body.length - 1);
-            //this.settings.speed += 1;
+
             if(this.isGameWon()) {
                 this.finish();
             }
@@ -92,26 +98,26 @@ let game = {
      * Проверка на победу
      * @returns {boolean}
      */
-    isGameWon() {
+     isGameWon() {
         return this.snake.body.length >= this.settings.winLength;
     },
 
     /**
      * Окончание игры (проигрыш)
      */
-    finish() {
+     finish() {
         //ставим статус в финиш
         this.status.setFinished();
         //останавливаем шаги змейки
         clearInterval(this.tickInterval);
         //меняем кнопку игры, сделаем серой и напишем игра закончена
-        this.changePlayButton('Игра закончена', true);
+        this.changePlayButton('Конец игры', true);
     },
 
     /**
      * Остановка игры
      */
-    stop() {
+     stop() {
         this.status.setStopped();
         clearInterval(this.tickInterval);
         this.changePlayButton('Старт');
@@ -121,7 +127,7 @@ let game = {
      * Получение стартовой позиции для головы змейки
      * @returns {{x: number, y: number}}
      */
-    getStartSnakePoint() {
+     getStartSnakePoint() {
         return {
             x: Math.floor(this.settings.colsCount / 2),
             y: Math.floor(this.settings.rowsCount / 2)
@@ -133,7 +139,7 @@ let game = {
      * @param textContent
      * @param isDisabled
      */
-    changePlayButton(textContent, isDisabled = false) {
+     changePlayButton(textContent, isDisabled = false) {
         let playButton = document.getElementById('playButton');
         playButton.textContent = textContent;
         isDisabled ? playButton.classList.add('disabled') : playButton.classList.remove('disabled');
@@ -143,7 +149,7 @@ let game = {
      * Получение новой координаты для еды
      * @returns {{x: number, y: number}}
      */
-    getRandomCoordinates() {
+     getRandomCoordinates() {
         let exclude = [...this.snake.body, this.food.getFoodCoordinates()];
 
         while(true) {
@@ -165,7 +171,7 @@ let game = {
     /**
      * Обработчик нажатия на кнопку "Старт/Стоп"
      */
-    playClickHandler() {
+     playClickHandler() {
         if (this.status.isPlaying()) {
             this.stop();
         } else if (this.status.isStopped()) {
@@ -176,7 +182,7 @@ let game = {
     /**
      * Функция, навешивающая обработчики событий в игре
      */
-    setEventHandlers() {
+     setEventHandlers() {
         document.getElementById('playButton').onclick =  function () {
             game.playClickHandler();
         };
@@ -187,7 +193,7 @@ let game = {
     /**
      * Обработчик нажатия на кнопку "Новая игра"
      */
-    newGameClickHandler() {
+     newGameClickHandler() {
         this.reset();
     },
 
@@ -195,7 +201,7 @@ let game = {
      * Обработчик события keydown (нажатий на кнопки направлений)
      * @param event
      */
-    keyDownHandler(event) {
+     keyDownHandler(event) {
         if(!this.status.isPlaying()) {
             return;
         }
@@ -211,11 +217,11 @@ let game = {
      * @param direction
      * @returns {boolean}
      */
-    canSetDirection(direction) {
+     canSetDirection(direction) {
         return direction === 'up' && this.snake.lastStepDirection !== 'down' ||
-            direction === 'right' && this.snake.lastStepDirection !== 'left' ||
-            direction === 'down' && this.snake.lastStepDirection !== 'up' ||
-            direction === 'left' && this.snake.lastStepDirection !== 'right';
+        direction === 'right' && this.snake.lastStepDirection !== 'left' ||
+        direction === 'down' && this.snake.lastStepDirection !== 'up' ||
+        direction === 'left' && this.snake.lastStepDirection !== 'right';
     },
 
     /**
@@ -223,22 +229,22 @@ let game = {
      * @param code
      * @returns {string}
      */
-    getDirectionByCode(code) {
+     getDirectionByCode(code) {
         switch (code) {
             case 'KeyW':
             case 'ArrowUp':
-                return 'up';
+            return 'up';
             case 'KeyD':
             case 'ArrowRight':
-                return 'right';
+            return 'right';
             case 'KeyS':
             case 'ArrowDown':
-                return 'down';
+            return 'down';
             case 'KeyA':
             case 'ArrowLeft':
-                return 'left';
+            return 'left';
             default:
-                return '';
+            return '';
         }
     },
 
@@ -246,21 +252,21 @@ let game = {
      * Проверка на то, может ли змейка попасть на следующую клетку
      * @returns {boolean}
      */
-    canSnakeMakeStep() {
+     canSnakeMakeStep() {
         let nextHeadPoint = this.snake.getNextStepHeadPoint();
 
-        return !this.snake.isBodyPoint(nextHeadPoint) &&
+        return !this.snake.isBodyPoint(nextHeadPoint);/* &&
             nextHeadPoint.x < this.settings.colsCount &&
             nextHeadPoint.y < this.settings.rowsCount &&
             nextHeadPoint.x >= 0 &&
-            nextHeadPoint.y >= 0;
-    },
-};
+            nextHeadPoint.y >= 0;*/
+        },
+    };
 
 /**
  * Инициализация игры по событию onload
  */
-window.onload = function () {
+ window.onload = function () {
     game.init();
 };
 

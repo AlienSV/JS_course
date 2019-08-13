@@ -8,7 +8,7 @@ const MAX_MAP_SIZE = 30;
 const MIN_MAP_SIZE = 10;
 const MAX_SPEED_SIZE = 10;
 const MIN_SPEED_SIZE = 1;
-const MAX_WIN_SIZE = 50;
+const MAX_WIN_SIZE = 51;
 const MIN_WIN_SIZE = 5;
 
 /**
@@ -18,8 +18,8 @@ const MIN_WIN_SIZE = 5;
 let settings = {
      rowsCount: 21,
      colsCount: 21,
-     speed: 2,
-     winLength: 50,
+     speed: 1,
+     winLength: 31,
 
     /**
      * Метод проверки настроек на валидность

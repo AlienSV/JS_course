@@ -1,10 +1,12 @@
 "use strict";
 
+function foodModule() {
+
 /**
  * Объект еды
  * @type {{x: null, y: null, setFoodCoordinates(*): void, getFoodCoordinates(): *, isFoodPoint(*): *}}
  */
-let food = {
+ let food = {
     x: null,
     y: null,
 
@@ -12,7 +14,7 @@ let food = {
      * Установка новых координат еды
      * @param point
      */
-    setFoodCoordinates(point) {
+     setFoodCoordinates(point) {
         this.x = point.x;
         this.y = point.y;
     },
@@ -21,7 +23,7 @@ let food = {
      * Получение координат еды
      * @returns {{x: *, y: *}}
      */
-    getFoodCoordinates() {
+     getFoodCoordinates() {
         return {x: this.x, y: this.y};
     },
 
@@ -30,7 +32,12 @@ let food = {
      * @param point
      * @returns {boolean}
      */
-    isFoodPoint(point) {
+     isFoodPoint(point) {
         return this.x === point.x && this.y === point.y;
     }
-};
+}
+return {setFoodCoordinates : food.setFoodCoordinates,
+ getFoodCoordinates : food.getFoodCoordinates,
+ isFoodPoint : food.isFoodPoint};
+}
+

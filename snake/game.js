@@ -8,7 +8,7 @@
     settings,
     renderer,
     snake,
-    food,
+    food: foodModule(),
     tickInterval: null,
     status,
     score: document.getElementById('scoreCount'),

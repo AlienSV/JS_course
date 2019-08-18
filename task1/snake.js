@@ -117,6 +117,6 @@ return {
     makeStep : snake.makeStep, 
     incrementBody : snake.incrementBody,
     setDirection : snake.setDirection,
-    isBodyPoint : snake. isBodyPoint
+    isBodyPoint : snake.isBodyPoint
 }
-}
+};

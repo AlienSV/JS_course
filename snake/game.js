@@ -6,7 +6,7 @@
  */
  let game = {
     settings,
-    renderer,
+    renderer: rendererModule(),
     snake: snakeModule(),
     food: foodModule(),
     tickInterval: null,

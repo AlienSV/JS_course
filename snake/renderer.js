@@ -1,5 +1,6 @@
 "use strict";
 
+function rendererModule() {
 /**
  * Объект отрисовщика
  * @type {{renderMap(*, *): void, cells: {}, render(*, *): void}}
@@ -44,27 +45,15 @@
         }
 
         snakePointArray.forEach((point, idx) => {
-            //if (!this.cells[`x${point.x}_y${point.y}`]) {
-            //    this.correctCoords(point);
-            //}
-            this.cells[`x${point.x}_y${point.y}`].classList.add(idx === 0 ? 'snakeHead' : 'snakeBody');
-        });
+         this.cells[`x${point.x}_y${point.y}`].classList.add(idx === 0 ? 'snakeHead' : 'snakeBody');
+     });
 
         this.cells[`x${foodPoint.x}_y${foodPoint.y}`].classList.add('food');
     },
-
-/*    correctCoords(point) {
-        if (snake.direction === 'up' && point.y < 0) {
-            snake.body[0].y = game.settings.rowsCount - 1;
-        };
-        if (snake.direction === 'down' && point.y > game.settings.rowsCount - 1) {
-            snake.body[0].y = 0;
-        };
-        if (snake.direction === 'left' && point.x < 0) {
-            snake.body[0].x = game.settings.colsCount - 1;
-        };
-        if (snake.direction === 'right' && point.x > game.settings.colsCount -1 ) {
-            snake.body[0].x = 0;
-        };
-    }*/
+}
+return {
+    cells: renderer.cells,
+    renderMap : renderer.renderMap,
+    render : renderer.render
+}
 };

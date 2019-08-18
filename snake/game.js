@@ -10,7 +10,7 @@
     snake,
     food: foodModule(),
     tickInterval: null,
-    status,
+    status: statusModule(),
     score: document.getElementById('scoreCount'),
     
     /**

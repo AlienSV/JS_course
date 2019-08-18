@@ -1,32 +1,34 @@
 "use strict";
+
+function statusModule() {
 /**
  * Объект состояния игры
  * @type {{condition: null, isPlaying(): *, isStopped(): *, setStopped(): void, setPlaying(): void, setFinished(): void}}
  */
-let status = {
+ let status = {
     /**
      * Текущее состояние
      */
-    condition: null,
+     condition: null,
 
     /**
      * Установка состояния "Игра"
      */
-    setPlaying() {
+     setPlaying() {
         this.condition = 'playing';
     },
 
     /**
      * Установка состояния "Стоп"
      */
-    setStopped() {
+     setStopped() {
         this.condition = 'stopped';
     },
 
     /**
      * Установка состояния "Финиш"
      */
-    setFinished() {
+     setFinished() {
         this.condition = 'finished';
     },
 
@@ -34,7 +36,7 @@ let status = {
      * Проверка на то, является ли текущее состояние состоянием "Игра"
      * @returns {boolean}
      */
-    isPlaying() {
+     isPlaying() {
         return this.condition === 'playing';
     },
 
@@ -42,7 +44,14 @@ let status = {
      * Проверка на то, является ли текущее состояние состоянием "Стоп"
      * @returns {boolean}
      */
-    isStopped() {
+     isStopped() {
         return this.condition === 'stopped';
     }
-};
+}
+return {
+    setPlaying : status.setPlaying,
+    setStopped : status.setStopped,
+    setFinished : status.setFinished,
+    isPlaying : status.isPlaying, isStopped: status.isStopped
+}
+}

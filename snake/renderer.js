@@ -44,16 +44,16 @@
         }
 
         snakePointArray.forEach((point, idx) => {
-            if (!this.cells[`x${point.x}_y${point.y}`]) {
-                this.correctCoords(point);
-            }
+            //if (!this.cells[`x${point.x}_y${point.y}`]) {
+            //    this.correctCoords(point);
+            //}
             this.cells[`x${point.x}_y${point.y}`].classList.add(idx === 0 ? 'snakeHead' : 'snakeBody');
         });
 
         this.cells[`x${foodPoint.x}_y${foodPoint.y}`].classList.add('food');
     },
 
-    correctCoords(point) {
+/*    correctCoords(point) {
         if (snake.direction === 'up' && point.y < 0) {
             snake.body[0].y = game.settings.rowsCount - 1;
         };
@@ -66,5 +66,5 @@
         if (snake.direction === 'right' && point.x > game.settings.colsCount -1 ) {
             snake.body[0].x = 0;
         };
-    }
+    }*/
 };

@@ -1,29 +1,30 @@
 "use strict";
 
+function snakeModule() {
 /**
  * Объект змейки
  * @type {{init(*, *): void, makeStep(): void, isBodyPoint(*): *, incrementBody(): void, lastStepDirection: null, getNextStepHeadPoint(): *, body: null, setDirection(*): void, direction: null}}
  */
-let snake = {
+ let snake = {
     /**
      * Тело (массив клеток тела: голова + хвост)
      */
-    body: null,
+     body: null,
     /**
      * Направление движения
      */
-    direction: null,
+     direction: null,
     /**
      * Предыдущее направление движения
      */
-    lastStepDirection: null,
+     lastStepDirection: null,
 
     /**
      * Рождение змейки (инициализация значений)
      * @param startPoint
      * @param direction
      */
-    init(startPoint, direction) {
+     init(startPoint, direction) {
         this.body = [startPoint];
         this.direction = direction;
         this.lastStepDirection = direction;
@@ -34,25 +35,45 @@ let snake = {
      * которое у нее сейчас)
      * @returns {*}
      */
-    getNextStepHeadPoint() {
+     getNextStepHeadPoint() {
         let firstPoint = this.body[0];
 
         switch (this.direction) {
             case 'up':
+            if (this.body[0].y === 0) {
+                return {x: firstPoint.x, y: game.settings.rowsCount - 1};
+            }
+            else {
                 return {x: firstPoint.x, y: firstPoint.y - 1};
+            }
             case 'down':
+            if (this.body[0].y === game.settings.rowsCount - 1) {
+                return {x: firstPoint.x, y: 0};
+            }
+            else {
                 return {x: firstPoint.x, y: firstPoint.y + 1};
+            }
             case 'right':
+            if (this.body[0].x === game.settings.colsCount - 1) {
+                return {x: 0, y: firstPoint.y};
+            }
+            else {
                 return {x: firstPoint.x + 1, y: firstPoint.y};
+            }
             case 'left' :
+            if (this.body[0].x === 0) {
+                return {x: game.settings.colsCount - 1, y: firstPoint.y};
+            }
+            else {
                 return {x: firstPoint.x - 1, y: firstPoint.y};
+            }
         }
     },
 
     /**
      * Метод перемещения змейки на 1 клетку в заданном направлении
      */
-    makeStep() {
+     makeStep() {
         //[{x: 5, y: 5}, {x: 6, y: 5}, {x: 7, y: 5}]
 
         //[{x: 4, y: 5}, {x: 5, y: 5}, {x: 6, y: 5}, {x: 7, y: 5}]
@@ -66,7 +87,7 @@ let snake = {
     /**
      * Метод увеличения тела после поедания клетки с едой
      */
-    incrementBody() {
+     incrementBody() {
         let lastBodyIdx = this.body.length - 1;
         let lastBodyPoint = this.body[lastBodyIdx];
         let lastBodyPointClone = Object.assign({}, lastBodyPoint);
@@ -77,7 +98,7 @@ let snake = {
      * Установка направления
      * @param direction
      */
-    setDirection(direction) {
+     setDirection(direction) {
         this.direction = direction;
     },
 
@@ -86,7 +107,16 @@ let snake = {
      * @param point
      * @returns {boolean}
      */
-    isBodyPoint(point) {
+     isBodyPoint(point) {
         return this.body.some(snakePoint => snakePoint.x === point.x && snakePoint.y === point.y);
     },
-};
+}
+return {
+    init: snake.init, 
+    getNextStepHeadPoint : snake.getNextStepHeadPoint,
+    makeStep : snake.makeStep, 
+    incrementBody : snake.incrementBody,
+    setDirection : snake.setDirection,
+    isBodyPoint : snake. isBodyPoint
+}
+}
